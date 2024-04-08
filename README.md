@@ -1,4 +1,4 @@
-Convert a text table such as the output from `df` (linux disk free command):
+## Convert a text table such as the output from `df` (linux disk free command):
 
 ```
 Filesystem                             1K-blocks      Used  Available Use% Mounted on
@@ -56,3 +56,23 @@ df, _ = lines_table_to_dataframe(lines)
 |  5 | tmpfs                                 | 4,194,304     | 0           | 4,194,304     |      0 | /var/tmp         |
 |  1 | devtmpfs                              | 4,096         | 0           | 4,096         |      0 | /dev             |
 |  7 | /dev/nvme1n1p1                        | 497,696       | 497,696     | 0             |    100 | /boot            |
+
+
+## Handle datasets within zip files
+
+```python
+from pdav.dataset import DatasetZip
+
+dsz = DatasetZip('/mnt/sabrent2/data/amazon-product-dataset-2020.zip')
+dsz.files
+# [Dataset('/mnt/sabrent2/data/amazon-product-dataset-2020.zip', 'home/sdf/marketing_sample_for_amazon_com-ecommerce__20200101_20200131__10k_data.csv')]
+df = dsz.files[0].to_frame()
+
+df.iloc[:3,:3]
+```
+
+|    | Uniq Id                          | Product Name  |   Brand Name |
+|---:|:---------------------------------|:--------------|-------------:|
+|  0 | 4c69... | DB Longboards...                                        |          nan |
+|  1 | 66d4... | Electronic Snap...                   |          nan |
+|  2 | 2c55... | 3Doodler Create... |          nan |
