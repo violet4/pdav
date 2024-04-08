@@ -63,9 +63,10 @@ df, _ = lines_table_to_dataframe(lines)
 ```python
 from pdav.dataset import DatasetZip
 
-dsz = DatasetZip('/mnt/sabrent2/data/amazon-product-dataset-2020.zip')
+dsz = DatasetZip('/mnt/sabrent2/data/some_dataset.zip')
 dsz.files
-# [Dataset('/mnt/sabrent2/data/amazon-product-dataset-2020.zip', 'home/sdf/marketing_sample_for_amazon_com-ecommerce__20200101_20200131__10k_data.csv')]
+# [Dataset('/mnt/sabrent2/data/some_dataset.zip',
+#          'home/sdf/sample_data.csv')]
 df = dsz.files[0].to_frame()
 
 df.iloc[:3,:3]
