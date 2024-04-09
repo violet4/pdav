@@ -21,7 +21,7 @@ class Dataset:
 
         self.read_clipboard: DataFrameFn = wraps(pd.read_clipboard)(self.wrap_read(pd.read_clipboard))
         self.read_fwf: DataFrameFn = wraps(pd.read_fwf)(self.wrap_read(pd.read_fwf))
-        self.read_hdf: DataFrameFn = wraps(pd.read_hdf)(self.wrap_read(pd.read_hdf))
+        # self.read_hdf: DataFrameFn = wraps(pd.read_hdf)(self.wrap_read(pd.read_hdf))
         self.read_json: DataFrameFn = wraps(pd.read_json)(self.wrap_read(pd.read_json))
         self.read_parquet: DataFrameFn = wraps(pd.read_parquet)(self.wrap_read(pd.read_parquet))
         self.read_sas: DataFrameFn = wraps(pd.read_sas)(self.wrap_read(pd.read_sas))
@@ -30,7 +30,7 @@ class Dataset:
         self.read_table: DataFrameFn = wraps(pd.read_table)(self.wrap_read(pd.read_table))
         self.read_feather: DataFrameFn = wraps(pd.read_feather)(self.wrap_read(pd.read_feather))
         self.read_gbq: DataFrameFn = wraps(pd.read_gbq)(self.wrap_read(pd.read_gbq))
-        self.read_html: DataFrameFn = wraps(pd.read_html)(self.wrap_read(pd.read_html))
+        # self.read_html: DataFrameFn = wraps(pd.read_html)(self.wrap_read(pd.read_html))
         self.read_orc: DataFrameFn = wraps(pd.read_orc)(self.wrap_read(pd.read_orc))
         self.read_pickle: DataFrameFn = wraps(pd.read_pickle)(self.wrap_read(pd.read_pickle))
         self.read_spss: DataFrameFn = wraps(pd.read_spss)(self.wrap_read(pd.read_spss))
@@ -47,9 +47,9 @@ class Dataset:
             with zf.open(self.filename) as fr:
                 yield fr
 
-    def wrap_read(self, fn, *args_base, **kwargs_base):
+    def wrap_read(self, fn: DataFrameFn, *args_base, **kwargs_base) -> DataFrameFn:
         @wraps(fn)
-        def wrapped(*args_new, **kwargs_new):
+        def wrapped(*args_new, **kwargs_new) -> pd.DataFrame:
             with self.open() as fr:
                 return fn(fr, *args_base, *args_new, **kwargs_base, **kwargs_new)
         return wrapped
