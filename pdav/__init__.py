@@ -33,7 +33,6 @@ def lines_table_to_dataframe(lines, ignore_indices=[]) -> Tuple[pd.DataFrame,lis
          ...]
     """
     max_len = max(map(len, lines))
-    max_len
 
     array = np.array([[c for c in line.ljust(max_len)] for line in lines])
 
